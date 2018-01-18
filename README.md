@@ -1,0 +1,2 @@
+# FiddlerImageFileExension
+Fiddler script
