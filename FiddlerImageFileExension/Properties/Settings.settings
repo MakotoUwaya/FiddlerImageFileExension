@@ -2,14 +2,17 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="FiddlerImageFileExension.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="IsCreateImage" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+    <Setting Name="MinimumFileSize" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">25</Value>
     </Setting>
     <Setting Name="SavePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="UserAgent" Type="System.String" Scope="User">
       <Value Profile="(Default)">Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.90 Safari/537.36</Value>
+    </Setting>
+    <Setting Name="MaximumFileSize" Type="System.Int64" Scope="User">
+      <Value Profile="(Default)">999999</Value>
     </Setting>
   </Settings>
 </SettingsFile>

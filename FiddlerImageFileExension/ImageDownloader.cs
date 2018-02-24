@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Drawing;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Fiddler;
+using System.Text.RegularExpressions;
 
 [assembly: RequiredVersion("2.3.5.0")]
 namespace FiddlerImageFileExension
 {
     public sealed class ImageDownloader : IAutoTamper
     {
+        private const int Thousand = 1000;
+
         private TabPage oPage;
         private Settings oView;
 
@@ -37,8 +39,7 @@ namespace FiddlerImageFileExension
 
         public void AutoTamperResponseBefore(Session oSession)
         {
-            if (!this.oView.DataContext.IsCreateImage || 
-                !Directory.Exists(this.oView.DataContext.SavePath))
+            if (!Directory.Exists(this.oView.DataContext.SavePath))
             {
                 return;
             }
@@ -57,17 +58,57 @@ namespace FiddlerImageFileExension
             try
             {
                 oSession.utilDecodeResponse();
+
+                var fileName = oSession.SuggestedFilename;
+                if (this.oView.DataContext.MinimumFileSize != this.oView.DataContext.MaximumFileSize)
+                {
+                    if (oSession.responseBodyBytes.Length < this.oView.DataContext.MinimumFileSize * Thousand ||
+                        this.oView.DataContext.MaximumFileSize * Thousand < oSession.responseBodyBytes.Length)
+                    {
+                        return;
+                    }
+                }                                
+
                 oStream = new MemoryStream(oSession.responseBodyBytes);
-                Image.FromStream(oStream).Save($@"{this.oView.DataContext.SavePath}\{oSession.SuggestedFilename}");
+                var image = Image.FromStream(oStream);
+                this.oView.Invoke(new Action(() => 
+                {
+                    var pictureBox = new PopupPictureBox
+                    {
+                        Image = image,
+                        SizeMode = PictureBoxSizeMode.Zoom,
+                        Size = new Size(this.oView.DataContext.ImageSizeValue, this.oView.DataContext.ImageSizeValue),
+                        SaveAction = () =>
+                        {
+                            var loopCount = 0;
+                            while (File.Exists($@"{this.oView.DataContext.SavePath}\{fileName}"))
+                            {
+                                fileName = Regex.Replace(fileName, @"^(.+)(?:|\(\d{0,2}\))\.(.+)$", $"$1({++loopCount}).$2");
+                            }
+                            image.Save($@"{this.oView.DataContext.SavePath}\{fileName}");
+                        },
+                    };
+
+                    pictureBox.SelectedChanged += this.PictureBox_SelectedChanged;
+                    pictureBox.Deleted += this.PictureBox_Deleted;
+
+                    this.oView.ImageFiles.Add(pictureBox);
+                }));
             }
             catch (Exception ex) when (ex is ArgumentNullException || ex is ExternalException)
             {
-                Trace.WriteLine(ex.ToString(), "ImageExtention Failed");
+                FiddlerApplication.Log.LogString($"ImageExtention Failed {ex.ToString()}");
             }
-            finally
-            {
-                oStream?.Dispose();
-            }
+        }
+
+        private void PictureBox_Deleted(object sender, EventArgs e)
+        {
+            this.oView.RemoveFileImage((Control)sender);
+        }
+
+        private void PictureBox_SelectedChanged(object sender, EventArgs e)
+        {
+            this.oView.SelectedCountUpdate();
         }
 
         public void OnBeforeReturningError(Session oSession)
@@ -76,7 +117,8 @@ namespace FiddlerImageFileExension
 
         public void OnBeforeUnload()
         {
-            Properties.Settings.Default.IsCreateImage = this.oView?.DataContext?.IsCreateImage ?? false;
+            Properties.Settings.Default.MinimumFileSize = this.oView?.DataContext?.MinimumFileSize ?? 25;
+            Properties.Settings.Default.MaximumFileSize = this.oView?.DataContext?.MaximumFileSize ?? 999999;
             Properties.Settings.Default.SavePath = this.oView?.DataContext?.SavePath;
             Properties.Settings.Default.UserAgent = this.oView?.DataContext?.UserAgent;
             Properties.Settings.Default.Save();
@@ -93,20 +135,26 @@ namespace FiddlerImageFileExension
             {
                 DataContext = new SettingsViewModel
                 {
-                    IsCreateImage = GetIsCreateImage(),
+                    MinimumFileSize = GetMinimumFileSize(),
+                    MaximumFileSize = GetMaximumFileSize(),
                     SavePath = GetSaveDirectory(),
                     UserAgent = GetUserAgent(),
-                }
+                },
+                Dock = DockStyle.Fill
             };
 
             this.oPage.Controls.Add(this.oView);
-            this.oView.Dock = DockStyle.Fill;
             FiddlerApplication.UI.tabsViews.TabPages.Add(this.oPage);
         }
 
-        private static bool GetIsCreateImage()
+        private static long GetMinimumFileSize()
         {
-            return Properties.Settings.Default.IsCreateImage;
+            return Properties.Settings.Default.MinimumFileSize;
+        }
+
+        private static long GetMaximumFileSize()
+        {
+            return Properties.Settings.Default.MaximumFileSize;
         }
 
         private static string GetSaveDirectory()
