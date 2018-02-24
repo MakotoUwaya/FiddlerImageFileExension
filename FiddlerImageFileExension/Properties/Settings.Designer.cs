@@ -25,13 +25,13 @@ namespace FiddlerImageFileExension.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IsCreateImage {
+        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        public long MinimumFileSize {
             get {
-                return ((bool)(this["IsCreateImage"]));
+                return ((long)(this["MinimumFileSize"]));
             }
             set {
-                this["IsCreateImage"] = value;
+                this["MinimumFileSize"] = value;
             }
         }
         
@@ -57,6 +57,18 @@ namespace FiddlerImageFileExension.Properties {
             }
             set {
                 this["UserAgent"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("999999")]
+        public long MaximumFileSize {
+            get {
+                return ((long)(this["MaximumFileSize"]));
+            }
+            set {
+                this["MaximumFileSize"] = value;
             }
         }
     }
