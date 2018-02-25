@@ -14,5 +14,20 @@
     <Setting Name="MaximumFileSize" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">999999</Value>
     </Setting>
+    <Setting Name="ImagePreviewSize" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">150</Value>
+    </Setting>
+    <Setting Name="IsSaveAndRemove" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ImageDialogLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="ImageDialogSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">640, 480</Value>
+    </Setting>
+    <Setting Name="ImageDialogWindowState" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

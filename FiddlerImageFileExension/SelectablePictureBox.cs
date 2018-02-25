@@ -3,6 +3,8 @@ using System.Windows.Forms;
 
 namespace FiddlerImageFileExension
 {
+    public delegate void SelectablePictureEventHandler(object sender, SelectablePictureEventArgs e);
+
     public partial class SelectablePictureBox : PictureBox
     {
         private bool selected;
@@ -13,13 +15,19 @@ namespace FiddlerImageFileExension
             {
                 this.selected = value;
                 this.Invalidate();
-                this.SelectedChanged?.Invoke(this, new EventArgs());
+                this.SelectionChanged?.Invoke(this, new SelectablePictureEventArgs(value));
             }
         }
 
-        public event EventHandler SelectedChanged;
+        public event SelectablePictureEventHandler SelectionChanged;
 
-        public event EventHandler Deleted;
+        public event SelectablePictureEventHandler SelectionAllChanged;
+
+        public event EventHandler SaveAll;
+
+        public event EventHandler Delete;
+
+        public event EventHandler DeleteAllSelected;
 
         private Action saveAction;
         public Action SaveAction
@@ -47,15 +55,36 @@ namespace FiddlerImageFileExension
             base.OnMouseDown(e);
         }
 
-        protected override void OnKeyUp(KeyEventArgs e)
-        {            
-            if (e.KeyData == Keys.Delete)
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.A)
             {
-                this.Deleted?.Invoke(this, new EventArgs());
+                this.SelectionAllChanged?.Invoke(this, new SelectablePictureEventArgs(true));
+            }
+            if (e.Control && e.KeyCode == Keys.S)
+            {
+                this.SaveAll?.Invoke(this, new EventArgs());
+            }
+            if (e.Control && e.Shift && e.KeyCode == Keys.A)
+            {
+                this.SelectionAllChanged?.Invoke(this, new SelectablePictureEventArgs(false));
+            }
+            if (e.Control && e.Shift && e.KeyCode == Keys.D)
+            {
+                this.DeleteAllSelected?.Invoke(this, new EventArgs());
             }
             if (e.KeyData == Keys.Space)
             {
                 this.Selected = !this.Selected;
+            }
+            base.OnKeyDown(e);
+        }
+
+        protected override void OnKeyUp(KeyEventArgs e)
+        {            
+            if (e.KeyData == Keys.Delete)
+            {
+                this.Delete?.Invoke(this, new EventArgs());
             }
             base.OnKeyUp(e);
         }

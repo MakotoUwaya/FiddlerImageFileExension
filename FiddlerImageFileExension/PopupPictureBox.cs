@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace FiddlerImageFileExension
 {
@@ -7,8 +8,9 @@ namespace FiddlerImageFileExension
         public PopupPictureBox()
         {
             this.InitializeComponent();
-
         }
+
+        public event EventHandler ShowingImageDialogWindow;
 
         protected override void OnKeyUp(KeyEventArgs e)
         {
@@ -36,8 +38,8 @@ namespace FiddlerImageFileExension
 
         private void ShowImageDialogWindow()
         {
-            var dialog = new ImageDialog(this.Image);
-            dialog.Show();
+            this.ShowingImageDialogWindow?.Invoke(this, new EventArgs());
         }
+
     }
 }

@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Settings));
             this.label1 = new System.Windows.Forms.Label();
             this.SaveDirectoryPathTextbox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -46,7 +47,9 @@
             this.SelectedImageCount = new System.Windows.Forms.Label();
             this.PreviewImageSizeSlider = new System.Windows.Forms.TrackBar();
             this.label6 = new System.Windows.Forms.Label();
-            this.IsSaveWithImageClear = new System.Windows.Forms.CheckBox();
+            this.IsSaveAndRemoveCheckBox = new System.Windows.Forms.CheckBox();
+            this.ChangeCaptureStatusButton = new System.Windows.Forms.Button();
+            this.StatusButtonImageList = new System.Windows.Forms.ImageList(this.components);
             this.settingsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.MinimumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaximumFileSize)).BeginInit();
@@ -57,7 +60,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 50);
+            this.label1.Location = new System.Drawing.Point(94, 50);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(138, 12);
             this.label1.TabIndex = 2;
@@ -65,18 +68,17 @@
             // 
             // SaveDirectoryPathTextbox
             // 
-            this.SaveDirectoryPathTextbox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.SaveDirectoryPathTextbox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "SavePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.SaveDirectoryPathTextbox.Location = new System.Drawing.Point(165, 47);
+            this.SaveDirectoryPathTextbox.Location = new System.Drawing.Point(238, 47);
             this.SaveDirectoryPathTextbox.Name = "SaveDirectoryPathTextbox";
-            this.SaveDirectoryPathTextbox.Size = new System.Drawing.Size(756, 19);
+            this.SaveDirectoryPathTextbox.Size = new System.Drawing.Size(580, 19);
             this.SaveDirectoryPathTextbox.TabIndex = 3;
+            this.SaveDirectoryPathTextbox.WordWrap = false;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(21, 14);
+            this.label3.Location = new System.Drawing.Point(147, 14);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 12);
             this.label3.TabIndex = 0;
@@ -84,12 +86,10 @@
             // 
             // textBox1
             // 
-            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "UserAgent", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox1.Location = new System.Drawing.Point(165, 11);
+            this.textBox1.Location = new System.Drawing.Point(238, 11);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(756, 19);
+            this.textBox1.Size = new System.Drawing.Size(580, 19);
             this.textBox1.TabIndex = 1;
             // 
             // FileImageListPanel
@@ -101,16 +101,16 @@
             this.FileImageListPanel.AutoScrollMargin = new System.Drawing.Size(0, 20);
             this.FileImageListPanel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.FileImageListPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.FileImageListPanel.Location = new System.Drawing.Point(15, 146);
+            this.FileImageListPanel.Location = new System.Drawing.Point(0, 146);
             this.FileImageListPanel.Name = "FileImageListPanel";
-            this.FileImageListPanel.Size = new System.Drawing.Size(906, 131);
+            this.FileImageListPanel.Size = new System.Drawing.Size(936, 131);
             this.FileImageListPanel.TabIndex = 6;
             this.FileImageListPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.FileImageListPanel_ControlAdded);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(21, 86);
+            this.label4.Location = new System.Drawing.Point(115, 86);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(117, 12);
             this.label4.TabIndex = 7;
@@ -124,7 +124,7 @@
             0,
             0,
             0});
-            this.MinimumFileSize.Location = new System.Drawing.Point(165, 81);
+            this.MinimumFileSize.Location = new System.Drawing.Point(238, 81);
             this.MinimumFileSize.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -143,7 +143,7 @@
             0,
             0,
             0});
-            this.MaximumFileSize.Location = new System.Drawing.Point(399, 81);
+            this.MaximumFileSize.Location = new System.Drawing.Point(466, 81);
             this.MaximumFileSize.Maximum = new decimal(new int[] {
             1215752192,
             23,
@@ -162,7 +162,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(273, 86);
+            this.label5.Location = new System.Drawing.Point(340, 86);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(120, 12);
             this.label5.TabIndex = 9;
@@ -171,7 +171,7 @@
             // ClearSelectedImagesButton
             // 
             this.ClearSelectedImagesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ClearSelectedImagesButton.Location = new System.Drawing.Point(768, 117);
+            this.ClearSelectedImagesButton.Location = new System.Drawing.Point(783, 117);
             this.ClearSelectedImagesButton.Name = "ClearSelectedImagesButton";
             this.ClearSelectedImagesButton.Size = new System.Drawing.Size(153, 23);
             this.ClearSelectedImagesButton.TabIndex = 0;
@@ -181,9 +181,9 @@
             // 
             // SaveSelectedImagesButton
             // 
-            this.SaveSelectedImagesButton.Location = new System.Drawing.Point(15, 117);
+            this.SaveSelectedImagesButton.Location = new System.Drawing.Point(0, 117);
             this.SaveSelectedImagesButton.Name = "SaveSelectedImagesButton";
-            this.SaveSelectedImagesButton.Size = new System.Drawing.Size(153, 23);
+            this.SaveSelectedImagesButton.Size = new System.Drawing.Size(142, 23);
             this.SaveSelectedImagesButton.TabIndex = 11;
             this.SaveSelectedImagesButton.Text = "Save Selected Images";
             this.SaveSelectedImagesButton.UseVisualStyleBackColor = true;
@@ -191,7 +191,7 @@
             // 
             // SelectAllButton
             // 
-            this.SelectAllButton.Location = new System.Drawing.Point(324, 117);
+            this.SelectAllButton.Location = new System.Drawing.Point(251, 117);
             this.SelectAllButton.Name = "SelectAllButton";
             this.SelectAllButton.Size = new System.Drawing.Size(106, 23);
             this.SelectAllButton.TabIndex = 12;
@@ -201,7 +201,7 @@
             // 
             // UnSelectAllButton
             // 
-            this.UnSelectAllButton.Location = new System.Drawing.Point(436, 117);
+            this.UnSelectAllButton.Location = new System.Drawing.Point(363, 117);
             this.UnSelectAllButton.Name = "UnSelectAllButton";
             this.UnSelectAllButton.Size = new System.Drawing.Size(106, 23);
             this.UnSelectAllButton.TabIndex = 13;
@@ -212,7 +212,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(560, 122);
+            this.label2.Location = new System.Drawing.Point(475, 122);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 12);
             this.label2.TabIndex = 14;
@@ -222,7 +222,7 @@
             // 
             this.SelectedImageCount.AutoSize = true;
             this.SelectedImageCount.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "SelectedCountText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.SelectedImageCount.Location = new System.Drawing.Point(661, 122);
+            this.SelectedImageCount.Location = new System.Drawing.Point(564, 122);
             this.SelectedImageCount.Name = "SelectedImageCount";
             this.SelectedImageCount.Size = new System.Drawing.Size(71, 12);
             this.SelectedImageCount.TabIndex = 15;
@@ -231,13 +231,13 @@
             // PreviewImageSizeSlider
             // 
             this.PreviewImageSizeSlider.AutoSize = false;
-            this.PreviewImageSizeSlider.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.settingsViewModelBindingSource, "ImageSizeValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.PreviewImageSizeSlider.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.settingsViewModelBindingSource, "ImagePreviewSizeValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.PreviewImageSizeSlider.LargeChange = 10;
-            this.PreviewImageSizeSlider.Location = new System.Drawing.Point(589, 81);
+            this.PreviewImageSizeSlider.Location = new System.Drawing.Point(626, 81);
             this.PreviewImageSizeSlider.Maximum = 500;
             this.PreviewImageSizeSlider.Minimum = 20;
             this.PreviewImageSizeSlider.Name = "PreviewImageSizeSlider";
-            this.PreviewImageSizeSlider.Size = new System.Drawing.Size(151, 45);
+            this.PreviewImageSizeSlider.Size = new System.Drawing.Size(192, 45);
             this.PreviewImageSizeSlider.SmallChange = 5;
             this.PreviewImageSizeSlider.TabIndex = 16;
             this.PreviewImageSizeSlider.TickFrequency = 50;
@@ -247,23 +247,53 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(514, 86);
+            this.label6.Location = new System.Drawing.Point(551, 86);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 12);
             this.label6.TabIndex = 17;
             this.label6.Text = "Preview size";
             // 
-            // IsSaveWithImageClear
+            // IsSaveAndRemoveCheckBox
             // 
-            this.IsSaveWithImageClear.AutoSize = true;
-            this.IsSaveWithImageClear.Checked = true;
-            this.IsSaveWithImageClear.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.IsSaveWithImageClear.Location = new System.Drawing.Point(174, 121);
-            this.IsSaveWithImageClear.Name = "IsSaveWithImageClear";
-            this.IsSaveWithImageClear.Size = new System.Drawing.Size(75, 16);
-            this.IsSaveWithImageClear.TabIndex = 18;
-            this.IsSaveWithImageClear.Text = "With clear";
-            this.IsSaveWithImageClear.UseVisualStyleBackColor = true;
+            this.IsSaveAndRemoveCheckBox.AutoSize = true;
+            this.IsSaveAndRemoveCheckBox.Checked = true;
+            this.IsSaveAndRemoveCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.IsSaveAndRemoveCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsViewModelBindingSource, "IsSaveAndRemove", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.IsSaveAndRemoveCheckBox.Location = new System.Drawing.Point(147, 121);
+            this.IsSaveAndRemoveCheckBox.Name = "IsSaveAndRemoveCheckBox";
+            this.IsSaveAndRemoveCheckBox.Size = new System.Drawing.Size(75, 16);
+            this.IsSaveAndRemoveCheckBox.TabIndex = 18;
+            this.IsSaveAndRemoveCheckBox.Text = "With clear";
+            this.IsSaveAndRemoveCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // ChangeCaptureStatusButton
+            // 
+            this.ChangeCaptureStatusButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.ChangeCaptureStatusButton.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "CaptureButtonText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ChangeCaptureStatusButton.DataBindings.Add(new System.Windows.Forms.Binding("ImageIndex", this.settingsViewModelBindingSource, "CaptureButtonImageIndex", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.ChangeCaptureStatusButton.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.ChangeCaptureStatusButton.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.ChangeCaptureStatusButton.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.ChangeCaptureStatusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ChangeCaptureStatusButton.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.ChangeCaptureStatusButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ChangeCaptureStatusButton.ImageIndex = 0;
+            this.ChangeCaptureStatusButton.ImageList = this.StatusButtonImageList;
+            this.ChangeCaptureStatusButton.Location = new System.Drawing.Point(0, 0);
+            this.ChangeCaptureStatusButton.Name = "ChangeCaptureStatusButton";
+            this.ChangeCaptureStatusButton.Size = new System.Drawing.Size(142, 26);
+            this.ChangeCaptureStatusButton.TabIndex = 19;
+            this.ChangeCaptureStatusButton.Text = " Caputure Start";
+            this.ChangeCaptureStatusButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.ChangeCaptureStatusButton.UseVisualStyleBackColor = false;
+            this.ChangeCaptureStatusButton.Click += new System.EventHandler(this.ChangeCaptureStatusButton_Click);
+            // 
+            // StatusButtonImageList
+            // 
+            this.StatusButtonImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("StatusButtonImageList.ImageStream")));
+            this.StatusButtonImageList.TransparentColor = System.Drawing.Color.White;
+            this.StatusButtonImageList.Images.SetKeyName(0, "Rec.png");
+            this.StatusButtonImageList.Images.SetKeyName(1, "Stop.png");
             // 
             // settingsViewModelBindingSource
             // 
@@ -274,7 +304,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.IsSaveWithImageClear);
+            this.Controls.Add(this.ChangeCaptureStatusButton);
+            this.Controls.Add(this.IsSaveAndRemoveCheckBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.SelectedImageCount);
             this.Controls.Add(this.label2);
@@ -323,6 +354,8 @@
         private System.Windows.Forms.Label SelectedImageCount;
         private System.Windows.Forms.TrackBar PreviewImageSizeSlider;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox IsSaveWithImageClear;
+        private System.Windows.Forms.CheckBox IsSaveAndRemoveCheckBox;
+        private System.Windows.Forms.Button ChangeCaptureStatusButton;
+        private System.Windows.Forms.ImageList StatusButtonImageList;
     }
 }
