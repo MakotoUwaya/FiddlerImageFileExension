@@ -80,12 +80,15 @@ namespace FiddlerImageFileExension
                         Size = new Size(this.oView.DataContext.ImageSizeValue, this.oView.DataContext.ImageSizeValue),
                         SaveAction = () =>
                         {
+                            // ファイル拡張子から余分な記述を削除
+                            var actualFileName = Regex.Replace(fileName, @"^(.+)\.(.+?)(?:|-.+)$", "$1.$2");
+
                             var loopCount = 0;
-                            while (File.Exists($@"{this.oView.DataContext.SavePath}\{fileName}"))
+                            while (File.Exists($@"{this.oView.DataContext.SavePath}\{actualFileName}"))
                             {
-                                fileName = Regex.Replace(fileName, @"^(.+)(?:|\(\d{0,2}\))\.(.+)$", $"$1({++loopCount}).$2");
+                                actualFileName = Regex.Replace(actualFileName, @"^(.+)(?:|\(\d{0,2}\))\.(.+)$", $"$1({++loopCount}).$2");
                             }
-                            image.Save($@"{this.oView.DataContext.SavePath}\{fileName}");
+                            image.Save($@"{this.oView.DataContext.SavePath}\{actualFileName}");
                         },
                     };
 
