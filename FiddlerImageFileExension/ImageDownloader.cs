@@ -90,6 +90,7 @@ namespace FiddlerImageFileExension
                     };
 
                     pictureBox.SelectedChanged += this.PictureBox_SelectedChanged;
+                    pictureBox.SelectedAll += this.PictureBox_SelectedAll;
                     pictureBox.Deleted += this.PictureBox_Deleted;
 
                     this.oView.ImageFiles.Add(pictureBox);
@@ -99,6 +100,11 @@ namespace FiddlerImageFileExension
             {
                 FiddlerApplication.Log.LogString($"ImageExtention Failed {ex.ToString()}");
             }
+        }
+
+        private void PictureBox_SelectedAll(object sender, EventArgs e)
+        {
+            this.oView.SelectionAllChange(true);
         }
 
         private void PictureBox_Deleted(object sender, EventArgs e)

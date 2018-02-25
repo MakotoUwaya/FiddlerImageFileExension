@@ -72,14 +72,19 @@ namespace FiddlerImageFileExension
             });
         }
 
+        public void SelectionAllChange(bool selected)
+        {
+            this.PicutureBoxList.ForEach(p => p.Selected = selected);
+        }
+
         private void SelectAllButton_Click(object sender, System.EventArgs e)
         {
-            this.PicutureBoxList.ForEach(p => p.Selected = true);
+            this.SelectionAllChange(true);
         }
 
         private void UnSelectAllButton_Click(object sender, System.EventArgs e)
         {
-            this.PicutureBoxList.ForEach(p => p.Selected = false);
+            this.SelectionAllChange(false);
         }
 
         private void FileImageListPanel_ControlAdded(object sender, ControlEventArgs e)

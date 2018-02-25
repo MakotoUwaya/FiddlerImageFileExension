@@ -19,6 +19,8 @@ namespace FiddlerImageFileExension
 
         public event EventHandler SelectedChanged;
 
+        public event EventHandler SelectedAll;
+
         public event EventHandler Deleted;
 
         private Action saveAction;
@@ -56,6 +58,10 @@ namespace FiddlerImageFileExension
             if (e.KeyData == Keys.Space)
             {
                 this.Selected = !this.Selected;
+            }
+            if (e.Shift && e.KeyData == Keys.A)
+            {
+                this.SelectedAll?.Invoke(this, new EventArgs());
             }
             base.OnKeyUp(e);
         }
