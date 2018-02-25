@@ -40,36 +40,40 @@ namespace FiddlerImageFileExension
 
         private void ClearImagesButton_Click(object sender, System.EventArgs e)
         {
-            if (this.DataContext.SelectedCount == this.DataContext.SelectedTotalCount)
-            {
-                this.FileImageListPanel.Controls.Clear();
-                this.SelectedCountUpdate();
-                return;
-            }
+            this.RemoveSelectedImages();
+        }
 
+        public void RemoveSelectedImages()
+        {
             this.PicutureBoxList.ForEach(x =>
             {
                 if (x.Selected)
                 {
                     this.RemoveFileImage(x);
                 }
-            });            
+            });
         }
 
         private void SaveSelectedImagesButton_Click(object sender, System.EventArgs e)
         {
-            this.PicutureBoxList.ForEach(x => 
+            this.SaveSelectedImages();
+        }
+
+        public void SaveSelectedImages()
+        {
+            this.PicutureBoxList.ForEach(x =>
             {
                 if (x.Selected)
                 {
                     x.SaveAction();
-
-                    if (this.IsSaveWithImageClear.Checked)
-                    {
-                        this.RemoveFileImage(x);
-                    }
                 }
             });
+
+            if (!this.IsSaveAndRemoveCheckBox.Checked)
+            {
+                return;
+            }
+            this.RemoveSelectedImages();
         }
 
         public void SelectionAllChange(bool selected)
@@ -98,10 +102,13 @@ namespace FiddlerImageFileExension
             this.PicutureBoxList.ForEach(p => p.Size = size);
         }
 
-        public void RemoveFileImage(Control pictureBox)
+        public void RemoveFileImage(PictureBox pictureBox)
         {
             var removeItemIndex = this.FileImageListPanel.Controls.IndexOf(pictureBox);
             this.FileImageListPanel.Controls.Remove(pictureBox);
+            pictureBox.Image?.Dispose();
+            pictureBox?.Dispose();
+
             this.SelectedCountUpdate();
 
             var focusIndex = removeItemIndex < this.FileImageListPanel.Controls.Count
@@ -115,6 +122,11 @@ namespace FiddlerImageFileExension
             }
             this.FileImageListPanel.Controls[focusIndex].Focus();
             
+        }
+
+        private void ChangeCaptureStatusButton_Click(object sender, System.EventArgs e)
+        {
+            this.DataContext.Capturing = !this.DataContext.Capturing;
         }
     }
 }

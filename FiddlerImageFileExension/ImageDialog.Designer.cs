@@ -38,7 +38,7 @@
             this.PictureImage.Margin = new System.Windows.Forms.Padding(0);
             this.PictureImage.Name = "PictureImage";
             this.PictureImage.Size = new System.Drawing.Size(380, 237);
-            this.PictureImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.PictureImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.PictureImage.TabIndex = 0;
             this.PictureImage.TabStop = false;
             // 
@@ -49,13 +49,14 @@
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(380, 237);
             this.Controls.Add(this.PictureImage);
+            this.KeyPreview = true;
             this.Name = "ImageDialog";
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "ImageDialog";
+            this.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.ImageDialog_PreviewKeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.PictureImage)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

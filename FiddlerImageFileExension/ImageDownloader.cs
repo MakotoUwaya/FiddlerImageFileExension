@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Fiddler;
-using System.Text.RegularExpressions;
 
 [assembly: RequiredVersion("2.3.5.0")]
 namespace FiddlerImageFileExension
@@ -15,6 +16,10 @@ namespace FiddlerImageFileExension
 
         private TabPage oPage;
         private Settings oView;
+        private ImageDialog oImageDialog;
+        private Size oImageDialogScreenSize;
+        private Point oImageDialogScreenLocation;
+        private FormWindowState oImageDialogWindowState;
 
         public ImageDownloader()
         {
@@ -39,7 +44,7 @@ namespace FiddlerImageFileExension
 
         public void AutoTamperResponseBefore(Session oSession)
         {
-            if (!Directory.Exists(this.oView.DataContext.SavePath))
+            if (!this.oView.DataContext.Capturing || !Directory.Exists(this.oView.DataContext.SavePath))
             {
                 return;
             }
@@ -49,12 +54,12 @@ namespace FiddlerImageFileExension
                 return;
             }
 
-            if (!oSession.oResponse.headers.ExistsAndContains("Content-Type", "image/"))
+            if (!oSession.oResponse.headers.ExistsAndContains("Content-Type", "image/") ||
+                oSession.oResponse.headers.ExistsAndContains("Content-Type", "image/svg"))
             {
                 return;
             }
-            
-            MemoryStream oStream = null;
+
             try
             {
                 oSession.utilDecodeResponse();
@@ -67,17 +72,18 @@ namespace FiddlerImageFileExension
                     {
                         return;
                     }
-                }                                
+                }
 
-                oStream = new MemoryStream(oSession.responseBodyBytes);
+                var oStream = new MemoryStream(oSession.responseBodyBytes);
                 var image = Image.FromStream(oStream);
+                
                 this.oView.Invoke(new Action(() => 
                 {
                     var pictureBox = new PopupPictureBox
                     {
                         Image = image,
                         SizeMode = PictureBoxSizeMode.Zoom,
-                        Size = new Size(this.oView.DataContext.ImageSizeValue, this.oView.DataContext.ImageSizeValue),
+                        Size = new Size(this.oView.DataContext.ImagePreviewSizeValue, this.oView.DataContext.ImagePreviewSizeValue),
                         SaveAction = () =>
                         {
                             // ファイル拡張子から余分な記述を削除
@@ -92,9 +98,12 @@ namespace FiddlerImageFileExension
                         },
                     };
 
-                    pictureBox.SelectedChanged += this.PictureBox_SelectedChanged;
-                    pictureBox.SelectedAll += this.PictureBox_SelectedAll;
-                    pictureBox.Deleted += this.PictureBox_Deleted;
+                    pictureBox.SelectionChanged += this.PictureBox_SelectionChanged;
+                    pictureBox.SelectionAllChanged += this.PictureBox_SelectionAllChanged;
+                    pictureBox.SaveAll += this.PictureBox_SaveAll;
+                    pictureBox.Delete += this.PictureBox_Delete;
+                    pictureBox.DeleteAllSelected += this.PictureBox_DeleteAllSelected;
+                    pictureBox.ShowingImageDialogWindow += this.PictureBox_ShowingImageDialogWindow;
 
                     this.oView.ImageFiles.Add(pictureBox);
                 }));
@@ -105,17 +114,68 @@ namespace FiddlerImageFileExension
             }
         }
 
-        private void PictureBox_SelectedAll(object sender, EventArgs e)
+        private void PictureBox_ShowingImageDialogWindow(object sender, EventArgs e)
         {
-            this.oView.SelectionAllChange(true);
+            var popupPictureBox = (PopupPictureBox)sender;
+            var images = popupPictureBox.Parent.Controls.Cast<PopupPictureBox>().Select(p => p.Image).ToList();
+            if (this.oImageDialog == null || this.oImageDialog.IsDisposed)
+            {                
+                this.oImageDialog = new ImageDialog(images);
+                this.oImageDialog.FormClosing += this.ImageDialog_FormClosing;
+                this.oImageDialog.Show();
+                this.oImageDialog.Location = this.oImageDialogScreenLocation;
+                this.oImageDialog.Size = this.oImageDialogScreenSize;
+                this.oImageDialog.WindowState = this.oImageDialogWindowState;
+            }
+            else
+            {
+                if (!ReferenceEquals(this.oImageDialog.Images, images))
+                {
+                    this.oImageDialog.Images = images;
+                }
+
+                this.oImageDialog.Show();
+                if (this.oImageDialog.WindowState == FormWindowState.Minimized)
+                {
+                    this.oImageDialog.WindowState = FormWindowState.Normal;
+                }
+            }
+
+            this.oImageDialog.SetImage(popupPictureBox.Image);
+            this.oImageDialog.Activate();
         }
 
-        private void PictureBox_Deleted(object sender, EventArgs e)
+        private void ImageDialog_FormClosing(object sender, FormClosingEventArgs e)
         {
-            this.oView.RemoveFileImage((Control)sender);
+            var form = (Form)sender;
+            this.oImageDialogScreenLocation = form.Bounds.Location;
+            this.oImageDialogScreenSize = form.Bounds.Size;
+            this.oImageDialogWindowState = form.WindowState == FormWindowState.Minimized 
+                ? FormWindowState.Maximized 
+                : form.WindowState;
         }
 
-        private void PictureBox_SelectedChanged(object sender, EventArgs e)
+        private void PictureBox_SelectionAllChanged(object sender, SelectablePictureEventArgs e)
+        {
+            this.oView.SelectionAllChange(e.IsSelect);
+        }
+
+        private void PictureBox_SaveAll(object sender, EventArgs e)
+        {
+            this.oView.SaveSelectedImages();
+        }
+
+        private void PictureBox_Delete(object sender, EventArgs e)
+        {
+            this.oView.RemoveFileImage((PictureBox)sender);
+        }
+
+        private void PictureBox_DeleteAllSelected(object sender, EventArgs e)
+        {
+            this.oView.RemoveSelectedImages();
+        }
+
+        private void PictureBox_SelectionChanged(object sender, SelectablePictureEventArgs e)
         {
             this.oView.SelectedCountUpdate();
         }
@@ -126,10 +186,17 @@ namespace FiddlerImageFileExension
 
         public void OnBeforeUnload()
         {
+            this.oImageDialog?.Close();
+
             Properties.Settings.Default.MinimumFileSize = this.oView?.DataContext?.MinimumFileSize ?? 25;
             Properties.Settings.Default.MaximumFileSize = this.oView?.DataContext?.MaximumFileSize ?? 999999;
+            Properties.Settings.Default.ImagePreviewSize = this.oView?.DataContext?.ImagePreviewSizeValue ?? 150;
+            Properties.Settings.Default.IsSaveAndRemove = this.oView?.DataContext?.IsSaveAndRemove ?? true;
             Properties.Settings.Default.SavePath = this.oView?.DataContext?.SavePath;
             Properties.Settings.Default.UserAgent = this.oView?.DataContext?.UserAgent;
+            Properties.Settings.Default.ImageDialogLocation = this.oImageDialogScreenLocation;
+            Properties.Settings.Default.ImageDialogSize = this.oImageDialogScreenSize;
+            Properties.Settings.Default.ImageDialogWindowState = (int)this.oImageDialogWindowState;
             Properties.Settings.Default.Save();
         }
 
@@ -146,11 +213,17 @@ namespace FiddlerImageFileExension
                 {
                     MinimumFileSize = GetMinimumFileSize(),
                     MaximumFileSize = GetMaximumFileSize(),
+                    ImagePreviewSizeValue = GetImagePreviewSize(),
+                    IsSaveAndRemove = GetIsSaveAndRemove(),
                     SavePath = GetSaveDirectory(),
                     UserAgent = GetUserAgent(),
                 },
                 Dock = DockStyle.Fill
             };
+
+            this.oImageDialogScreenLocation = Properties.Settings.Default.ImageDialogLocation;
+            this.oImageDialogScreenSize = Properties.Settings.Default.ImageDialogSize;
+            this.oImageDialogWindowState = (FormWindowState)Properties.Settings.Default.ImageDialogWindowState;
 
             this.oPage.Controls.Add(this.oView);
             FiddlerApplication.UI.tabsViews.TabPages.Add(this.oPage);
@@ -179,6 +252,16 @@ namespace FiddlerImageFileExension
         private static string GetUserAgent()
         {
             return Properties.Settings.Default.UserAgent;
+        }
+
+        private static int GetImagePreviewSize()
+        {
+            return Properties.Settings.Default.ImagePreviewSize;
+        }
+
+        private static bool GetIsSaveAndRemove()
+        {
+            return Properties.Settings.Default.IsSaveAndRemove;
         }
 
     }

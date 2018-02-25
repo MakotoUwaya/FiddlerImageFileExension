@@ -23,6 +23,41 @@ namespace FiddlerImageFileExension
             }
         }
 
+        private bool iSaveAndRemove;
+        public bool IsSaveAndRemove
+        {
+            get { return this.iSaveAndRemove; }
+            set
+            {
+                this.iSaveAndRemove = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+
+        private bool capturing;
+        public bool Capturing
+        {
+            get { return this.capturing; }
+            set
+            {
+                this.capturing = value;
+                this.NotifyPropertyChanged();
+                this.NotifyPropertyChanged(nameof(this.CaptureButtonText));
+                this.NotifyPropertyChanged(nameof(this.CaptureButtonImageIndex));
+            }
+        }
+
+        public string CaptureButtonText
+        {
+            get { return this.Capturing ? " Stop Capture" : " Start Capture"; }
+        }
+
+        public int CaptureButtonImageIndex
+        {
+            get { return this.Capturing ? 1 : 0; }
+        }
+
+
         private string userAgent;
         public string UserAgent
         {
@@ -83,13 +118,13 @@ namespace FiddlerImageFileExension
             }
         }
 
-        private int imageSizeValue = 150;
-        public int ImageSizeValue
+        private int imagePreviewSizeValue = 150;
+        public int ImagePreviewSizeValue
         {
-            get { return this.imageSizeValue; }
+            get { return this.imagePreviewSizeValue; }
             set
             {
-                this.imageSizeValue = value;
+                this.imagePreviewSizeValue = value;
                 this.NotifyPropertyChanged();
             }
         }

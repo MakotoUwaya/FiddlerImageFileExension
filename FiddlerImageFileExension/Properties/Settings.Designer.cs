@@ -71,5 +71,65 @@ namespace FiddlerImageFileExension.Properties {
                 this["MaximumFileSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("150")]
+        public int ImagePreviewSize {
+            get {
+                return ((int)(this["ImagePreviewSize"]));
+            }
+            set {
+                this["ImagePreviewSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool IsSaveAndRemove {
+            get {
+                return ((bool)(this["IsSaveAndRemove"]));
+            }
+            set {
+                this["IsSaveAndRemove"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0, 0")]
+        public global::System.Drawing.Point ImageDialogLocation {
+            get {
+                return ((global::System.Drawing.Point)(this["ImageDialogLocation"]));
+            }
+            set {
+                this["ImageDialogLocation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("640, 480")]
+        public global::System.Drawing.Size ImageDialogSize {
+            get {
+                return ((global::System.Drawing.Size)(this["ImageDialogSize"]));
+            }
+            set {
+                this["ImageDialogSize"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2")]
+        public int ImageDialogWindowState {
+            get {
+                return ((int)(this["ImageDialogWindowState"]));
+            }
+            set {
+                this["ImageDialogWindowState"] = value;
+            }
+        }
     }
 }
