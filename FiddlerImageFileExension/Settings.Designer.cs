@@ -50,6 +50,7 @@
             this.IsSaveAndRemoveCheckBox = new System.Windows.Forms.CheckBox();
             this.ChangeCaptureStatusButton = new System.Windows.Forms.Button();
             this.StatusButtonImageList = new System.Windows.Forms.ImageList(this.components);
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.settingsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.MinimumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaximumFileSize)).BeginInit();
@@ -89,7 +90,7 @@
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "UserAgent", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBox1.Location = new System.Drawing.Point(238, 11);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(580, 19);
+            this.textBox1.Size = new System.Drawing.Size(445, 19);
             this.textBox1.TabIndex = 1;
             // 
             // FileImageListPanel
@@ -295,6 +296,19 @@
             this.StatusButtonImageList.Images.SetKeyName(0, "Rec.png");
             this.StatusButtonImageList.Images.SetKeyName(1, "Stop.png");
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Checked = true;
+            this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsViewModelBindingSource, "UsingOriginalSettings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBox1.Location = new System.Drawing.Point(689, 13);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(130, 16);
+            this.checkBox1.TabIndex = 20;
+            this.checkBox1.Text = "Use original settings";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
             // settingsViewModelBindingSource
             // 
             this.settingsViewModelBindingSource.DataSource = typeof(FiddlerImageFileExension.SettingsViewModel);
@@ -304,6 +318,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.ChangeCaptureStatusButton);
             this.Controls.Add(this.IsSaveAndRemoveCheckBox);
             this.Controls.Add(this.label6);
@@ -357,5 +372,6 @@
         private System.Windows.Forms.CheckBox IsSaveAndRemoveCheckBox;
         private System.Windows.Forms.Button ChangeCaptureStatusButton;
         private System.Windows.Forms.ImageList StatusButtonImageList;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

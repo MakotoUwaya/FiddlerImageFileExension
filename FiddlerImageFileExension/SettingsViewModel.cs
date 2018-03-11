@@ -69,6 +69,17 @@ namespace FiddlerImageFileExension
             }
         }
 
+        private bool usingOriginalSettings;
+        public bool UsingOriginalSettings
+        {
+            get { return this.usingOriginalSettings; }
+            set
+            {
+                this.usingOriginalSettings = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+
         private long minimumFileSize = 25;
         public long MinimumFileSize
         {

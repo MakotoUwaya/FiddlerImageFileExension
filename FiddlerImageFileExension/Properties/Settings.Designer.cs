@@ -131,5 +131,17 @@ namespace FiddlerImageFileExension.Properties {
                 this["ImageDialogWindowState"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool UsingOriginalSettings {
+            get {
+                return ((bool)(this["UsingOriginalSettings"]));
+            }
+            set {
+                this["UsingOriginalSettings"] = value;
+            }
+        }
     }
 }

@@ -31,7 +31,7 @@ namespace FiddlerImageFileExension
 
         public void AutoTamperRequestBefore(Session oSession)
         {
-            if (oSession == null)
+            if (oSession == null || (this.oView?.DataContext.UsingOriginalSettings ?? true))
             {
                 return;
             }
@@ -197,6 +197,7 @@ namespace FiddlerImageFileExension
             Properties.Settings.Default.ImageDialogLocation = this.oImageDialogScreenLocation;
             Properties.Settings.Default.ImageDialogSize = this.oImageDialogScreenSize;
             Properties.Settings.Default.ImageDialogWindowState = (int)this.oImageDialogWindowState;
+            Properties.Settings.Default.UsingOriginalSettings = this.oView?.DataContext?.UsingOriginalSettings ?? true;
             Properties.Settings.Default.Save();
         }
 
@@ -217,6 +218,7 @@ namespace FiddlerImageFileExension
                     IsSaveAndRemove = GetIsSaveAndRemove(),
                     SavePath = GetSaveDirectory(),
                     UserAgent = GetUserAgent(),
+                    UsingOriginalSettings = GetUsingOriginalSettings(),
                 },
                 Dock = DockStyle.Fill
             };
@@ -262,6 +264,11 @@ namespace FiddlerImageFileExension
         private static bool GetIsSaveAndRemove()
         {
             return Properties.Settings.Default.IsSaveAndRemove;
+        }
+
+        private static bool GetUsingOriginalSettings()
+        {
+            return Properties.Settings.Default.UsingOriginalSettings;
         }
 
     }
