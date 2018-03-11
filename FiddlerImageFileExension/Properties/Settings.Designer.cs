@@ -50,7 +50,7 @@ namespace FiddlerImageFileExension.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrom" +
-            "e/59.0.3071.90 Safari/537.36")]
+            "e/64.0.3282.189 Safari/537.36")]
         public string UserAgent {
             get {
                 return ((string)(this["UserAgent"]));
