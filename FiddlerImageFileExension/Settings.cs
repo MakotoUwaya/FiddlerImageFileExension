@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -39,7 +40,7 @@ namespace FiddlerImageFileExension
             this.DataContext.SelectedTotalCount = this.FileImageListPanel.Controls.Count;
         }
 
-        private void ClearImagesButton_Click(object sender, System.EventArgs e)
+        private void ClearImagesButton_Click(object sender, EventArgs e)
         {
             this.RemoveSelectedImages();
         }
@@ -55,7 +56,7 @@ namespace FiddlerImageFileExension
             });
         }
 
-        private void SaveSelectedImagesButton_Click(object sender, System.EventArgs e)
+        private void SaveSelectedImagesButton_Click(object sender, EventArgs e)
         {
             this.SaveSelectedImages();
         }
@@ -82,12 +83,12 @@ namespace FiddlerImageFileExension
             this.PicutureBoxList.ForEach(p => p.Selected = selected);
         }
 
-        private void SelectAllButton_Click(object sender, System.EventArgs e)
+        private void SelectAllButton_Click(object sender, EventArgs e)
         {
             this.SelectionAllChange(true);
         }
 
-        private void UnSelectAllButton_Click(object sender, System.EventArgs e)
+        private void UnSelectAllButton_Click(object sender, EventArgs e)
         {
             this.SelectionAllChange(false);
         }
@@ -97,7 +98,7 @@ namespace FiddlerImageFileExension
             this.SelectedCountUpdate();
         }
 
-        private void PreviewImageSizeSlider_ValueChanged(object sender, System.EventArgs e)
+        private void PreviewImageSizeSlider_ValueChanged(object sender, EventArgs e)
         {
             var size = new Size(this.PreviewImageSizeSlider.Value, this.PreviewImageSizeSlider.Value);
             this.PicutureBoxList.ForEach(p => p.Size = size);
@@ -125,7 +126,7 @@ namespace FiddlerImageFileExension
             
         }
 
-        private void ChangeCaptureStatusButton_Click(object sender, System.EventArgs e)
+        private void ChangeCaptureStatusButton_Click(object sender, EventArgs e)
         {
             this.DataContext.Capturing = !this.DataContext.Capturing;
         }
