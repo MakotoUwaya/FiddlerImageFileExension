@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 
 using System.Windows.Forms;
@@ -127,6 +128,21 @@ namespace FiddlerImageFileExension
         private void ChangeCaptureStatusButton_Click(object sender, System.EventArgs e)
         {
             this.DataContext.Capturing = !this.DataContext.Capturing;
+        }
+
+        private void SelectDirectoryButton_Click(object sender, EventArgs e)
+        {
+            var folderBrowserDialog = new FolderBrowserDialog
+            {
+                Description = "Please select destination directory.",
+                SelectedPath = this.DataContext.SavePath,
+            };
+            
+            if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK &&
+                Directory.Exists(folderBrowserDialog.SelectedPath))
+            {
+                this.DataContext.SavePath = folderBrowserDialog.SelectedPath;
+            }            
         }
     }
 }
