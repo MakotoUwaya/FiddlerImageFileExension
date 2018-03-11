@@ -52,6 +52,7 @@
             this.StatusButtonImageList = new System.Windows.Forms.ImageList(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.settingsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.SelectDirectoryButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.MinimumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaximumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImageSizeSlider)).BeginInit();
@@ -72,7 +73,7 @@
             this.SaveDirectoryPathTextbox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "SavePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.SaveDirectoryPathTextbox.Location = new System.Drawing.Point(238, 47);
             this.SaveDirectoryPathTextbox.Name = "SaveDirectoryPathTextbox";
-            this.SaveDirectoryPathTextbox.Size = new System.Drawing.Size(580, 19);
+            this.SaveDirectoryPathTextbox.Size = new System.Drawing.Size(445, 19);
             this.SaveDirectoryPathTextbox.TabIndex = 3;
             this.SaveDirectoryPathTextbox.WordWrap = false;
             // 
@@ -313,11 +314,22 @@
             // 
             this.settingsViewModelBindingSource.DataSource = typeof(FiddlerImageFileExension.SettingsViewModel);
             // 
+            // SelectDirectoryButton
+            // 
+            this.SelectDirectoryButton.Location = new System.Drawing.Point(689, 45);
+            this.SelectDirectoryButton.Name = "SelectDirectoryButton";
+            this.SelectDirectoryButton.Size = new System.Drawing.Size(129, 23);
+            this.SelectDirectoryButton.TabIndex = 21;
+            this.SelectDirectoryButton.Text = "Select Directory";
+            this.SelectDirectoryButton.UseVisualStyleBackColor = true;
+            this.SelectDirectoryButton.Click += new System.EventHandler(this.SelectDirectoryButton_Click);
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Controls.Add(this.SelectDirectoryButton);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.ChangeCaptureStatusButton);
             this.Controls.Add(this.IsSaveAndRemoveCheckBox);
@@ -373,5 +385,6 @@
         private System.Windows.Forms.Button ChangeCaptureStatusButton;
         private System.Windows.Forms.ImageList StatusButtonImageList;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button SelectDirectoryButton;
     }
 }
