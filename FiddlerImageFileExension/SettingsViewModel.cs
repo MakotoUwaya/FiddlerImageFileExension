@@ -1,43 +1,95 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Windows.Forms;
 
 namespace FiddlerImageFileExension
 {
-    public class SettingsViewModel : INotifyPropertyChanged
+    public class SettingsViewModel : INotifyPropertyChanged, IDisposable
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        private readonly ISettingParameters settingParameters;
 
-        private string savePath;
-        public string SavePath
+        private ImageDialog imageDialog;
+        private ImageDialog oImageDialog
         {
-            get { return this.savePath; }
+            get { return this.imageDialog; }
             set
             {
-                if (this.savePath == value)
+                if (this.imageDialog == value)
                 {
                     return;
                 }
-                this.savePath = value;
+                this.imageDialog = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+        private Size oImageDialogScreenSize
+        {
+            get { return Properties.Settings.Default.ImageDialogSize; }
+            set
+            {
+                if (this.oImageDialogScreenSize == value)
+                {
+                    return;
+                }
+                this.settingParameters.ImageDialogSize = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+        private Point oImageDialogScreenLocation
+        {
+            get { return Properties.Settings.Default.ImageDialogLocation; }
+            set
+            {
+                if (this.oImageDialogScreenLocation == value)
+                {
+                    return;
+                }
+                this.settingParameters.ImageDialogLocation = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+        private FormWindowState oImageDialogWindowState
+        {
+            get { return (FormWindowState)Properties.Settings.Default.ImageDialogWindowState; }
+            set
+            {
+                if (this.oImageDialogWindowState == value)
+                {
+                    return;
+                }
+                this.settingParameters.ImageDialogWindowState = (int)value;
                 this.NotifyPropertyChanged();
             }
         }
 
-        private bool iSaveAndRemove;
-        public bool IsSaveAndRemove
+        public string SavePath
         {
-            get { return this.iSaveAndRemove; }
+            get { return this.settingParameters.SavePath; }
             set
             {
-                if (this.iSaveAndRemove == value)
+                if (this.SavePath == value)
                 {
                     return;
                 }
-                this.iSaveAndRemove = value;
+                this.settingParameters.SavePath = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+
+        public bool IsSaveAndRemove
+        {
+            get { return this.settingParameters.IsSaveAndRemove; }
+            set
+            {
+                if (this.IsSaveAndRemove == value)
+                {
+                    return;
+                }
+                this.settingParameters.IsSaveAndRemove = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -70,62 +122,58 @@ namespace FiddlerImageFileExension
         }
 
 
-        private string userAgent;
         public string UserAgent
         {
-            get { return this.userAgent; }
+            get { return this.settingParameters.UserAgent; }
             set
             {
-                if (this.userAgent == value)
+                if (this.UserAgent == value)
                 {
                     return;
                 }
-                this.userAgent = value;
+                this.settingParameters.UserAgent = value;
                 this.NotifyPropertyChanged();
             }
         }
 
-        private bool usingOriginalSettings;
         public bool UsingOriginalSettings
         {
-            get { return this.usingOriginalSettings; }
+            get { return this.settingParameters.UsingOriginalSettings; }
             set
             {
-                if (this.usingOriginalSettings == value)
+                if (this.UsingOriginalSettings == value)
                 {
                     return;
                 }
-                this.usingOriginalSettings = value;
+                this.settingParameters.UsingOriginalSettings = value;
                 this.NotifyPropertyChanged();
             }
         }
 
-        private long minimumFileSize = 25;
         public long MinimumFileSize
         {
-            get { return this.minimumFileSize; }
+            get { return this.settingParameters.MinimumFileSize; }
             set
             {
-                if (this.minimumFileSize == value)
+                if (this.MinimumFileSize == value)
                 {
                     return;
                 }
-                this.minimumFileSize = value;
+                this.settingParameters.MinimumFileSize = value;
                 this.NotifyPropertyChanged();
             }
         }
 
-        private long maximumFileSize = 999999;
         public long MaximumFileSize
         {
-            get { return this.maximumFileSize; }
+            get { return this.settingParameters.MaximumFileSize; }
             set
             {
-                if (this.maximumFileSize == value)
+                if (this.MaximumFileSize == value)
                 {
                     return;
                 }
-                this.maximumFileSize = value;
+                this.settingParameters.MaximumFileSize = value;
                 this.NotifyPropertyChanged();
             }
         }
@@ -165,19 +213,104 @@ namespace FiddlerImageFileExension
             }
         }
 
-        private int imagePreviewSizeValue = 150;
         public int ImagePreviewSizeValue
         {
-            get { return this.imagePreviewSizeValue; }
+            get { return this.settingParameters.ImagePreviewSize; }
             set
             {
-                if (this.imagePreviewSizeValue == value)
+                if (this.ImagePreviewSizeValue == value)
                 {
                     return;
                 }
-                this.imagePreviewSizeValue = value;
+                this.settingParameters.ImagePreviewSize = value;
                 this.NotifyPropertyChanged();
             }
+        }
+
+        public SettingsViewModel(ISettingParameters parameters)
+        {
+            this.settingParameters = parameters;
+        }
+        
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void PictureBox_ShowingImageDialogWindow(object sender, EventArgs e)
+        {
+            var popupPictureBox = (PopupPictureBox)sender;
+            var images = popupPictureBox.Parent.Controls.Cast<PopupPictureBox>().Select(p => p.Image).ToList();
+            if (this.oImageDialog == null || this.oImageDialog.IsDisposed)
+            {
+                this.oImageDialog = new ImageDialog(images);
+                this.oImageDialog.FormClosing += this.ImageDialog_FormClosing;
+                this.oImageDialog.Show();
+                this.oImageDialog.Location = this.oImageDialogScreenLocation;
+                this.oImageDialog.Size = this.oImageDialogScreenSize;
+                this.oImageDialog.WindowState = this.oImageDialogWindowState;
+            }
+            else
+            {
+                if (!ReferenceEquals(this.oImageDialog.Images, images))
+                {
+                    this.oImageDialog.Images = images;
+                }
+
+                this.oImageDialog.Show();
+                if (this.oImageDialog.WindowState == FormWindowState.Minimized)
+                {
+                    this.oImageDialog.WindowState = FormWindowState.Normal;
+                }
+            }
+
+            this.oImageDialog.SetImage(popupPictureBox.Image);
+            this.oImageDialog.Activate();
+        }
+
+        private void ImageDialog_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var form = (Form)sender;
+            this.oImageDialogScreenLocation = form.Bounds.Location;
+            this.oImageDialogScreenSize = form.Bounds.Size;
+            this.oImageDialogWindowState = form.WindowState == FormWindowState.Minimized
+                ? FormWindowState.Maximized
+                : form.WindowState;
+        }
+
+        private void PictureBox_SelectionAllChanged(object sender, SelectablePictureEventArgs e)
+        {
+            this.oView.SelectionAllChange(e.IsSelect);
+        }
+
+        private void PictureBox_SaveAll(object sender, EventArgs e)
+        {
+            this.oView.SaveSelectedImages();
+        }
+
+        private void PictureBox_Delete(object sender, EventArgs e)
+        {
+            this.oView.RemoveFileImage((PictureBox)sender);
+        }
+
+        private void PictureBox_DeleteAllSelected(object sender, EventArgs e)
+        {
+            this.oView.RemoveSelectedImages();
+        }
+
+        private void PictureBox_SelectionChanged(object sender, SelectablePictureEventArgs e)
+        {
+            this.oView.SelectedCountUpdate();
+        }
+
+        public void CloseImageDialog()
+        {
+            this.oImageDialog?.Close();
+        }
+
+        public void Dispose()
+        {
+            this.CloseImageDialog();
         }
     }
 }

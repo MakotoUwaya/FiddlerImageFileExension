@@ -63,6 +63,8 @@
       <DependentUpon>ImageDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageDownloader.cs" />
+    <Compile Include="SettingParameters.cs" />
+    <Compile Include="ISettingParameters.cs" />
     <Compile Include="PopupPictureBox.cs">
       <SubType>Component</SubType>
     </Compile>
