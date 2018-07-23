@@ -18,6 +18,10 @@ namespace FiddlerImageFileExension
             get { return this.savePath; }
             set
             {
+                if (this.savePath == value)
+                {
+                    return;
+                }
                 this.savePath = value;
                 this.NotifyPropertyChanged();
             }
@@ -29,6 +33,10 @@ namespace FiddlerImageFileExension
             get { return this.iSaveAndRemove; }
             set
             {
+                if (this.iSaveAndRemove == value)
+                {
+                    return;
+                }
                 this.iSaveAndRemove = value;
                 this.NotifyPropertyChanged();
             }
@@ -40,6 +48,10 @@ namespace FiddlerImageFileExension
             get { return this.capturing; }
             set
             {
+                if (this.capturing == value)
+                {
+                    return;
+                }
                 this.capturing = value;
                 this.NotifyPropertyChanged();
                 this.NotifyPropertyChanged(nameof(this.CaptureButtonText));
@@ -64,6 +76,10 @@ namespace FiddlerImageFileExension
             get { return this.userAgent; }
             set
             {
+                if (this.userAgent == value)
+                {
+                    return;
+                }
                 this.userAgent = value;
                 this.NotifyPropertyChanged();
             }
@@ -75,6 +91,10 @@ namespace FiddlerImageFileExension
             get { return this.usingOriginalSettings; }
             set
             {
+                if (this.usingOriginalSettings == value)
+                {
+                    return;
+                }
                 this.usingOriginalSettings = value;
                 this.NotifyPropertyChanged();
             }
@@ -86,6 +106,10 @@ namespace FiddlerImageFileExension
             get { return this.minimumFileSize; }
             set
             {
+                if (this.minimumFileSize == value)
+                {
+                    return;
+                }
                 this.minimumFileSize = value;
                 this.NotifyPropertyChanged();
             }
@@ -97,6 +121,10 @@ namespace FiddlerImageFileExension
             get { return this.maximumFileSize; }
             set
             {
+                if (this.maximumFileSize == value)
+                {
+                    return;
+                }
                 this.maximumFileSize = value;
                 this.NotifyPropertyChanged();
             }
@@ -113,6 +141,10 @@ namespace FiddlerImageFileExension
             get { return this.selectedCount; }
             set
             {
+                if (this.selectedCount == value)
+                {
+                    return;
+                }
                 this.selectedCount = value;
                 this.NotifyPropertyChanged(nameof(this.SelectedCountText));
             }
@@ -124,6 +156,10 @@ namespace FiddlerImageFileExension
             get { return this.selectedTotalCount; }
             set
             {
+                if (this.selectedTotalCount == value)
+                {
+                    return;
+                }
                 this.selectedTotalCount = value;
                 this.NotifyPropertyChanged(nameof(this.SelectedCountText));
             }
@@ -135,6 +171,10 @@ namespace FiddlerImageFileExension
             get { return this.imagePreviewSizeValue; }
             set
             {
+                if (this.imagePreviewSizeValue == value)
+                {
+                    return;
+                }
                 this.imagePreviewSizeValue = value;
                 this.NotifyPropertyChanged();
             }
