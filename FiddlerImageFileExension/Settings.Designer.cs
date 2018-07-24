@@ -52,17 +52,19 @@
             this.StatusButtonImageList = new System.Windows.Forms.ImageList(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SelectDirectoryButton = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.settingsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.MinimumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaximumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImageSizeSlider)).BeginInit();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.settingsViewModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(94, 50);
+            this.label1.Location = new System.Drawing.Point(107, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(138, 12);
             this.label1.TabIndex = 2;
@@ -71,7 +73,7 @@
             // SaveDirectoryPathTextbox
             // 
             this.SaveDirectoryPathTextbox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "SavePath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.SaveDirectoryPathTextbox.Location = new System.Drawing.Point(238, 47);
+            this.SaveDirectoryPathTextbox.Location = new System.Drawing.Point(251, 50);
             this.SaveDirectoryPathTextbox.Name = "SaveDirectoryPathTextbox";
             this.SaveDirectoryPathTextbox.Size = new System.Drawing.Size(445, 19);
             this.SaveDirectoryPathTextbox.TabIndex = 3;
@@ -80,7 +82,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(147, 14);
+            this.label3.Location = new System.Drawing.Point(160, 17);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(85, 12);
             this.label3.TabIndex = 0;
@@ -89,7 +91,7 @@
             // textBox1
             // 
             this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "UserAgent", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.textBox1.Location = new System.Drawing.Point(238, 11);
+            this.textBox1.Location = new System.Drawing.Point(251, 14);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(445, 19);
             this.textBox1.TabIndex = 1;
@@ -102,16 +104,17 @@
             this.FileImageListPanel.AutoScroll = true;
             this.FileImageListPanel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.FileImageListPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.FileImageListPanel.Location = new System.Drawing.Point(0, 146);
+            this.FileImageListPanel.Location = new System.Drawing.Point(3, 149);
+            this.FileImageListPanel.Margin = new System.Windows.Forms.Padding(3, 200, 3, 200);
             this.FileImageListPanel.Name = "FileImageListPanel";
-            this.FileImageListPanel.Size = new System.Drawing.Size(936, 147);
+            this.FileImageListPanel.Size = new System.Drawing.Size(924, 25);
             this.FileImageListPanel.TabIndex = 6;
             this.FileImageListPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.FileImageListPanel_ControlAdded);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(115, 86);
+            this.label4.Location = new System.Drawing.Point(128, 89);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(117, 12);
             this.label4.TabIndex = 7;
@@ -125,7 +128,7 @@
             0,
             0,
             0});
-            this.MinimumFileSize.Location = new System.Drawing.Point(238, 81);
+            this.MinimumFileSize.Location = new System.Drawing.Point(251, 84);
             this.MinimumFileSize.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -144,7 +147,7 @@
             0,
             0,
             0});
-            this.MaximumFileSize.Location = new System.Drawing.Point(466, 81);
+            this.MaximumFileSize.Location = new System.Drawing.Point(479, 84);
             this.MaximumFileSize.Maximum = new decimal(new int[] {
             1215752192,
             23,
@@ -163,7 +166,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(340, 86);
+            this.label5.Location = new System.Drawing.Point(353, 89);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(120, 12);
             this.label5.TabIndex = 9;
@@ -172,7 +175,7 @@
             // ClearSelectedImagesButton
             // 
             this.ClearSelectedImagesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ClearSelectedImagesButton.Location = new System.Drawing.Point(783, 117);
+            this.ClearSelectedImagesButton.Location = new System.Drawing.Point(774, 120);
             this.ClearSelectedImagesButton.Name = "ClearSelectedImagesButton";
             this.ClearSelectedImagesButton.Size = new System.Drawing.Size(153, 23);
             this.ClearSelectedImagesButton.TabIndex = 0;
@@ -182,7 +185,7 @@
             // 
             // SaveSelectedImagesButton
             // 
-            this.SaveSelectedImagesButton.Location = new System.Drawing.Point(0, 117);
+            this.SaveSelectedImagesButton.Location = new System.Drawing.Point(13, 120);
             this.SaveSelectedImagesButton.Name = "SaveSelectedImagesButton";
             this.SaveSelectedImagesButton.Size = new System.Drawing.Size(142, 23);
             this.SaveSelectedImagesButton.TabIndex = 11;
@@ -192,7 +195,7 @@
             // 
             // SelectAllButton
             // 
-            this.SelectAllButton.Location = new System.Drawing.Point(251, 117);
+            this.SelectAllButton.Location = new System.Drawing.Point(264, 120);
             this.SelectAllButton.Name = "SelectAllButton";
             this.SelectAllButton.Size = new System.Drawing.Size(106, 23);
             this.SelectAllButton.TabIndex = 12;
@@ -202,7 +205,7 @@
             // 
             // UnSelectAllButton
             // 
-            this.UnSelectAllButton.Location = new System.Drawing.Point(363, 117);
+            this.UnSelectAllButton.Location = new System.Drawing.Point(376, 120);
             this.UnSelectAllButton.Name = "UnSelectAllButton";
             this.UnSelectAllButton.Size = new System.Drawing.Size(106, 23);
             this.UnSelectAllButton.TabIndex = 13;
@@ -213,7 +216,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(475, 122);
+            this.label2.Location = new System.Drawing.Point(488, 125);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(83, 12);
             this.label2.TabIndex = 14;
@@ -223,7 +226,7 @@
             // 
             this.SelectedImageCount.AutoSize = true;
             this.SelectedImageCount.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsViewModelBindingSource, "SelectedCountText", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.SelectedImageCount.Location = new System.Drawing.Point(564, 122);
+            this.SelectedImageCount.Location = new System.Drawing.Point(577, 125);
             this.SelectedImageCount.Name = "SelectedImageCount";
             this.SelectedImageCount.Size = new System.Drawing.Size(71, 12);
             this.SelectedImageCount.TabIndex = 15;
@@ -234,7 +237,7 @@
             this.PreviewImageSizeSlider.AutoSize = false;
             this.PreviewImageSizeSlider.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.settingsViewModelBindingSource, "ImagePreviewSizeValue", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.PreviewImageSizeSlider.LargeChange = 10;
-            this.PreviewImageSizeSlider.Location = new System.Drawing.Point(626, 81);
+            this.PreviewImageSizeSlider.Location = new System.Drawing.Point(639, 84);
             this.PreviewImageSizeSlider.Maximum = 500;
             this.PreviewImageSizeSlider.Minimum = 20;
             this.PreviewImageSizeSlider.Name = "PreviewImageSizeSlider";
@@ -248,7 +251,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(551, 86);
+            this.label6.Location = new System.Drawing.Point(564, 89);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(69, 12);
             this.label6.TabIndex = 17;
@@ -260,7 +263,7 @@
             this.IsSaveAndRemoveCheckBox.Checked = true;
             this.IsSaveAndRemoveCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.IsSaveAndRemoveCheckBox.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsViewModelBindingSource, "IsSaveAndRemove", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.IsSaveAndRemoveCheckBox.Location = new System.Drawing.Point(147, 121);
+            this.IsSaveAndRemoveCheckBox.Location = new System.Drawing.Point(160, 124);
             this.IsSaveAndRemoveCheckBox.Name = "IsSaveAndRemoveCheckBox";
             this.IsSaveAndRemoveCheckBox.Size = new System.Drawing.Size(75, 16);
             this.IsSaveAndRemoveCheckBox.TabIndex = 18;
@@ -280,7 +283,7 @@
             this.ChangeCaptureStatusButton.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.ChangeCaptureStatusButton.ImageIndex = 0;
             this.ChangeCaptureStatusButton.ImageList = this.StatusButtonImageList;
-            this.ChangeCaptureStatusButton.Location = new System.Drawing.Point(0, 0);
+            this.ChangeCaptureStatusButton.Location = new System.Drawing.Point(13, 3);
             this.ChangeCaptureStatusButton.Name = "ChangeCaptureStatusButton";
             this.ChangeCaptureStatusButton.Size = new System.Drawing.Size(142, 26);
             this.ChangeCaptureStatusButton.TabIndex = 19;
@@ -302,7 +305,7 @@
             this.checkBox1.Checked = true;
             this.checkBox1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox1.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsViewModelBindingSource, "UsingOriginalSettings", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.checkBox1.Location = new System.Drawing.Point(689, 13);
+            this.checkBox1.Location = new System.Drawing.Point(702, 16);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(130, 16);
             this.checkBox1.TabIndex = 20;
@@ -311,13 +314,44 @@
             // 
             // SelectDirectoryButton
             // 
-            this.SelectDirectoryButton.Location = new System.Drawing.Point(689, 45);
+            this.SelectDirectoryButton.Location = new System.Drawing.Point(702, 48);
             this.SelectDirectoryButton.Name = "SelectDirectoryButton";
             this.SelectDirectoryButton.Size = new System.Drawing.Size(129, 23);
             this.SelectDirectoryButton.TabIndex = 21;
             this.SelectDirectoryButton.Text = "Select Directory";
             this.SelectDirectoryButton.UseVisualStyleBackColor = true;
             this.SelectDirectoryButton.Click += new System.EventHandler(this.SelectDirectoryButton_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.ChangeCaptureStatusButton);
+            this.panel1.Controls.Add(this.FileImageListPanel);
+            this.panel1.Controls.Add(this.SelectDirectoryButton);
+            this.panel1.Controls.Add(this.checkBox1);
+            this.panel1.Controls.Add(this.SaveDirectoryPathTextbox);
+            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.IsSaveAndRemoveCheckBox);
+            this.panel1.Controls.Add(this.textBox1);
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.SelectedImageCount);
+            this.panel1.Controls.Add(this.label4);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.MinimumFileSize);
+            this.panel1.Controls.Add(this.UnSelectAllButton);
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.SelectAllButton);
+            this.panel1.Controls.Add(this.MaximumFileSize);
+            this.panel1.Controls.Add(this.SaveSelectedImagesButton);
+            this.panel1.Controls.Add(this.ClearSelectedImagesButton);
+            this.panel1.Controls.Add(this.PreviewImageSizeSlider);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(930, 278);
+            this.panel1.TabIndex = 22;
             // 
             // settingsViewModelBindingSource
             // 
@@ -328,35 +362,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.Controls.Add(this.SelectDirectoryButton);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.ChangeCaptureStatusButton);
-            this.Controls.Add(this.IsSaveAndRemoveCheckBox);
-            this.Controls.Add(this.label6);
-            this.Controls.Add(this.SelectedImageCount);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.UnSelectAllButton);
-            this.Controls.Add(this.SelectAllButton);
-            this.Controls.Add(this.SaveSelectedImagesButton);
-            this.Controls.Add(this.ClearSelectedImagesButton);
-            this.Controls.Add(this.MaximumFileSize);
-            this.Controls.Add(this.label5);
-            this.Controls.Add(this.MinimumFileSize);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.FileImageListPanel);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.SaveDirectoryPathTextbox);
-            this.Controls.Add(this.PreviewImageSizeSlider);
+            this.Controls.Add(this.panel1);
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(936, 296);
+            this.Size = new System.Drawing.Size(936, 284);
             ((System.ComponentModel.ISupportInitialize)(this.MinimumFileSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaximumFileSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImageSizeSlider)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.settingsViewModelBindingSource)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -385,5 +400,6 @@
         private System.Windows.Forms.ImageList StatusButtonImageList;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Button SelectDirectoryButton;
+        private System.Windows.Forms.Panel panel1;
     }
 }

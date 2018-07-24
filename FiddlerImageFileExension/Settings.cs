@@ -136,5 +136,6 @@ namespace FiddlerImageFileExension
                 this.DataContext.SavePath = folderBrowserDialog.SelectedPath;
             }            
         }
+
     }
 }
