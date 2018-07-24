@@ -51,8 +51,8 @@
             this.ChangeCaptureStatusButton = new System.Windows.Forms.Button();
             this.StatusButtonImageList = new System.Windows.Forms.ImageList(this.components);
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.settingsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.SelectDirectoryButton = new System.Windows.Forms.Button();
+            this.settingsViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.MinimumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaximumFileSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImageSizeSlider)).BeginInit();
@@ -100,12 +100,11 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.FileImageListPanel.AutoScroll = true;
-            this.FileImageListPanel.AutoScrollMargin = new System.Drawing.Size(0, 20);
             this.FileImageListPanel.BackColor = System.Drawing.SystemColors.ControlDark;
             this.FileImageListPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.FileImageListPanel.Location = new System.Drawing.Point(0, 146);
             this.FileImageListPanel.Name = "FileImageListPanel";
-            this.FileImageListPanel.Size = new System.Drawing.Size(936, 131);
+            this.FileImageListPanel.Size = new System.Drawing.Size(936, 147);
             this.FileImageListPanel.TabIndex = 6;
             this.FileImageListPanel.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.FileImageListPanel_ControlAdded);
             // 
@@ -310,10 +309,6 @@
             this.checkBox1.Text = "Use original settings";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // settingsViewModelBindingSource
-            // 
-            this.settingsViewModelBindingSource.DataSource = typeof(FiddlerImageFileExension.SettingsViewModel);
-            // 
             // SelectDirectoryButton
             // 
             this.SelectDirectoryButton.Location = new System.Drawing.Point(689, 45);
@@ -323,6 +318,10 @@
             this.SelectDirectoryButton.Text = "Select Directory";
             this.SelectDirectoryButton.UseVisualStyleBackColor = true;
             this.SelectDirectoryButton.Click += new System.EventHandler(this.SelectDirectoryButton_Click);
+            // 
+            // settingsViewModelBindingSource
+            // 
+            this.settingsViewModelBindingSource.DataSource = typeof(FiddlerImageFileExension.SettingsViewModel);
             // 
             // Settings
             // 
@@ -351,7 +350,7 @@
             this.Controls.Add(this.SaveDirectoryPathTextbox);
             this.Controls.Add(this.PreviewImageSizeSlider);
             this.Name = "Settings";
-            this.Size = new System.Drawing.Size(936, 280);
+            this.Size = new System.Drawing.Size(936, 296);
             ((System.ComponentModel.ISupportInitialize)(this.MinimumFileSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.MaximumFileSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImageSizeSlider)).EndInit();

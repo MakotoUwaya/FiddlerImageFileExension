@@ -6,14 +6,9 @@ namespace FiddlerImageFileExension
 {
     partial class ImageDialog : Form
     {
-        private IList<Image> images;
-        public IList<Image> Images
-        {
-            get { return this.images; }
-            set { this.images = value; }
-        }
+	    public IList<Image> Images { get; set; }
 
-        private int imageIndex = -1;
+	    private int imageIndex = -1;
 
         private FormWindowState beforeWindowState = FormWindowState.Normal;
 

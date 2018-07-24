@@ -12,24 +12,15 @@ namespace FiddlerImageFileExension
     {
         public SettingsViewModel DataContext
         {
-            get { return this.settingsViewModelBindingSource.DataSource as SettingsViewModel; }
-            set { this.settingsViewModelBindingSource.DataSource = value; }
+            get => this.settingsViewModelBindingSource.DataSource as SettingsViewModel;
+	        set => this.settingsViewModelBindingSource.DataSource = value;
         }
 
-        public ControlCollection ImageFiles
-        {
-            get { return this.FileImageListPanel.Controls; }
-        }
+        public ControlCollection ImageFiles => this.FileImageListPanel.Controls;
 
-        private List<SelectablePictureBox> PicutureBoxList
-        {
-            get
-            {
-                return this.FileImageListPanel.Controls.Cast<SelectablePictureBox>().ToList();
-            }
-        }
+	    private List<SelectablePictureBox> PicutureBoxList => this.FileImageListPanel.Controls.Cast<SelectablePictureBox>().ToList();
 
-        public Settings()
+	    public Settings()
         {
             this.InitializeComponent();
         }
@@ -109,7 +100,7 @@ namespace FiddlerImageFileExension
             var removeItemIndex = this.FileImageListPanel.Controls.IndexOf(pictureBox);
             this.FileImageListPanel.Controls.Remove(pictureBox);
             pictureBox.Image?.Dispose();
-            pictureBox?.Dispose();
+            pictureBox.Dispose();
 
             this.SelectedCountUpdate();
 
